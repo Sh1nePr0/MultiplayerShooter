@@ -42,6 +42,7 @@ protected:
 	
 private:
 	IOnlineSessionPtr SessionInterface;
+	TSharedPtr<FOnlineSessionSettings> LastSessionSettings;
 
 	//
 	//Delegates that will add to the Online Session Interface delegate list.
