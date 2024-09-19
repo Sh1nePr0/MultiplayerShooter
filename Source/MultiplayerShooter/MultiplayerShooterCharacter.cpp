@@ -58,6 +58,7 @@ AMultiplayerShooterCharacter::AMultiplayerShooterCharacter()
 	{
 		OnlineSessionInterface = OnlineSubsystem->GetSessionInterface();
 
+		/*
 		if(GEngine != nullptr)
 		{
 			GEngine->AddOnScreenDebugMessage(
@@ -67,7 +68,7 @@ AMultiplayerShooterCharacter::AMultiplayerShooterCharacter()
 				FString::Printf(
 					TEXT("Found subsystem %s"), *OnlineSubsystem->GetSubsystemName().ToString())
 				);
-		}
+		}*/
 	}
 }
 
