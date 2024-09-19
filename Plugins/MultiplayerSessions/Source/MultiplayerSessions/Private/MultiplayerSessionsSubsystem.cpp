@@ -48,6 +48,7 @@ void UMultiplayerSessionsSubsystem::CreateSession(int32 NumOfPublicConnections, 
 	LastSessionSettings->bAllowJoinViaPresence = true;
 	LastSessionSettings->bShouldAdvertise = true;
 	LastSessionSettings->bUsesPresence = true;
+	LastSessionSettings->bUseLobbiesIfAvailable = true;
 	LastSessionSettings->Set(
 		FName("MatchType"),
 		MatchType,
@@ -60,10 +61,13 @@ void UMultiplayerSessionsSubsystem::CreateSession(int32 NumOfPublicConnections, 
 		*LastSessionSettings))
 	{
 		SessionInterface->ClearOnCreateSessionCompleteDelegate_Handle(CreateSessionCompleteDelegateHandle);
+
+		//Broadcast custom delegate
+		MultiplayerOnCreateSessionComplete.Broadcast(false);
 	}
 }
 
-void UMultiplayerSessionsSubsystem::FindSession(int32 MaxSearchResults)
+void UMultiplayerSessionsSubsystem::FindSessions(int32 MaxSearchResults)
 {
 	
 }
@@ -85,7 +89,12 @@ void UMultiplayerSessionsSubsystem::StartSession()
 
 void UMultiplayerSessionsSubsystem::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
 {
+	if(SessionInterface != nullptr)
+	{
+		SessionInterface->ClearOnCreateSessionCompleteDelegate_Handle(CreateSessionCompleteDelegateHandle);
+	}
 	
+	MultiplayerOnCreateSessionComplete.Broadcast(bWasSuccessful);
 }
 
 void UMultiplayerSessionsSubsystem::OnFindSessionComplete(bool bWasSuccessful)
